@@ -1,12 +1,15 @@
-# Utilise une image officielle PHP
+# Utilise une image officielle PHP avec serveur intégré
 FROM php:8.2-cli
 
-# Installe les extensions nécessaires
+# Installe les extensions PHP nécessaires
 RUN apt-get update && apt-get install -y unzip zip libzip-dev && docker-php-ext-install zip
 
-# Copie les fichiers du projet
+# Copie ton projet dans le conteneur
 COPY . /app
 WORKDIR /app
 
-# Commande de démarrage du serveur PHP
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
+# Expose le port que Render utilise
+EXPOSE 10000
+
+# Lance un serveur PHP sur le bon port
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "."]
