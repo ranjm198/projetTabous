@@ -14,12 +14,137 @@ if (!isset($_SESSION['superadmin'])) {
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
     />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+
     <link
       rel="icon"
       href="assets/img/tabou.png"
       type="image/x-icon"
     />
-  
+  <style>
+  #calendar {
+    max-width: 100%;
+    margin: 20px auto;
+  }
+  /* FullCalendar personnalisé */
+  /* Boutons month, week, day */
+.fc .fc-button-group .fc-button {
+  background-color: #808080ff !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-size: 15px;
+  font-weight: 500;
+ border-radius: 30px !important;
+   margin-right: 6px;
+   width: 80px;
+  transition: background-color 0.3s ease;
+}
+/* Bouton "Aujourd'hui" */
+.fc-today-button {
+   background-color: #4e44c6 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-size: 15px;
+  font-weight: 500;
+ border-radius: 30px !important;
+   margin-right: 6px;
+   width: 80px;
+  transition: background-color 0.3s ease;
+}
+/* Boutons "flèche gauche" et "flèche droite" */
+.fc .fc-prev-button,
+.fc .fc-next-button {
+  background-color: #6c63ff !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 30px !important; /* bouton rond */
+  width: 50px !important;
+  height: 35px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px !important; /* taille de la flèche */
+  transition: background-color 0.3s ease;
+}
+
+/* Hover */
+.fc .fc-prev-button:hover,
+.fc .fc-next-button:hover {
+  background-color: #574fd6 !important;
+}
+
+.fc .fc-button.fc-today-button:hover {
+  background-color: #574fd6 !important; /* Violet plus foncé au hover */
+}
+.fc .fc-button-group .fc-button:hover {
+  background-color: #3a3a3aff !important;
+}
+
+.fc .fc-button-group .fc-button.fc-button-active {
+  background-color: #4e44c6 !important;
+  box-shadow: inset 0 0 0 2px #ffffff33 !important;
+}
+
+.fc {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Couleurs des jours de la semaine */
+.fc-day-header {
+  background-color: #f1f3f5;
+  color: #344767;
+  font-weight: 600;
+}
+
+/* Jour actuel */
+.fc-day-today {
+  background-color: #e3f2fd !important;
+  border: 1px solid #2196f3 !important;
+}
+
+/* Événements */
+.fc-event {
+ background-color: #6c63ff !important;
+   border: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #fff;
+}
+
+/* Boutons de la barre de navigation */
+.fc-toolbar .fc-button {
+  background-color: #6c63ff;
+  border: none;
+  color: white;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.fc-toolbar .fc-button:hover {
+  background-color: #574fd6;
+}
+
+.fc-toolbar .fc-button.fc-button-active {
+  background-color: #4e44c6;
+}
+
+/* Titre du mois */
+.fc-toolbar-title {
+  color: #3c4858;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+</style>
+
 
     <!-- Fonts and icons -->
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
@@ -58,8 +183,7 @@ if (!isset($_SESSION['superadmin'])) {
           <div class="logo-header" data-background-color="dark">
             
             <a href="index.html" class="logo" style="color:white">
-              TABOUS CONFECTION
-            </a>
+Espace Administrateur             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
@@ -195,6 +319,7 @@ if (!isset($_SESSION['superadmin'])) {
 
         <div class="container">
           <div class="page-inner">
+
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
@@ -208,82 +333,17 @@ if (!isset($_SESSION['superadmin'])) {
               </div>
             </div>
             <div class="row">
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-primary bubble-shadow-small">
-              <i class="fas fa-file-invoice-dollar"></i>
-            </div>
-          </div>
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Factures totales</p>
-              <h4 class="card-title">152</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-success bubble-shadow-small">
-              <i class="fas fa-money-check-alt"></i>
-            </div>
-          </div>
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Factures payées</p>
-              <h4 class="card-title">120</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-warning bubble-shadow-small">
-              <i class="fas fa-exclamation-circle"></i>
-            </div>
           </div>
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Factures impayé</p>
-              <h4 class="card-title">32</h4>
-            </div>
-          </div>
-        </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Calendrier des événements</h4>
       </div>
-    </div>
-  </div>
-
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
       <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-users"></i>
-            </div>
-          </div>
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Clients</p>
-              <h4 class="card-title">45</h4>
-            </div>
-          </div>
-        </div>
+        <div id="calendar"></div>
       </div>
     </div>
   </div>
@@ -553,5 +613,52 @@ if (!isset($_SESSION['superadmin'])) {
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'fr',
+      selectable: true,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: 'events.php', // GET events
+
+      dateClick: function (info) {
+        const title = prompt("Titre de l'événement :");
+        if (title) {
+          fetch('events.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+              title: title,
+              start: info.dateStr
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'success') {
+              calendar.addEvent({
+                title: title,
+                start: info.dateStr,
+                allDay: true
+              });
+              alert("Événement ajouté !");
+            } else {
+              alert("Erreur d'enregistrement !");
+            }
+          });
+        }
+      }
+    });
+
+    calendar.render();
+  });
+</script>
+
   </body>
 </html>
