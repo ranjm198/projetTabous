@@ -85,22 +85,31 @@ $lignes = $stmt->fetchAll();
       </tbody>
     </table>
 
-    <section class="totaux">
-      <table>
-        <tr>
-          <td>Total HT</td>
-          <td><?= number_format($facture['total_ht'], 2) ?> DT</td>
-        </tr>
-        <tr>
-          <td>TVA (18%)</td>
-          <td><?= number_format($facture['total_ttc'] - $facture['total_ht'], 2) ?> DT</td>
-        </tr>
-        <tr>
-          <td><strong>Total TTC</strong></td>
-          <td><strong><?= number_format($facture['total_ttc'], 2) ?> DT</strong></td>
-        </tr>
-      </table>
-    </section>
+  <section class="totaux">
+  <table>
+    <tr>
+      <td>Total HT</td>
+      <td><?= number_format($facture['total'], 2) ?> DT</td>
+    </tr>
+    <tr>
+      <td>TVA</td>
+      <td><?= number_format($facture['tva'], 2) ?> DT</td>
+    </tr>
+    <tr>
+      <td>FODEC</td>
+      <td><?= number_format($facture['fodec'], 2) ?> DT</td>
+    </tr>
+    <tr>
+      <td>Timbre</td>
+      <td><?= number_format($facture['timbre'], 2) ?> DT</td>
+    </tr>
+    <tr>
+      <td><strong>Total TTC</strong></td>
+      <td><strong><?= number_format($facture['total_ttc'], 2) ?> DT</strong></td>
+    </tr>
+  </table>
+</section>
+
 
     <footer class="pied">
       <p>Signature : ...........................................</p>
