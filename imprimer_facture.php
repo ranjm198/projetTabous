@@ -80,8 +80,7 @@ $lignes = $stmt->fetchAll();
         </tr>
         <?php endforeach; ?>
         <!-- Lignes vides pour format -->
-        <tr><td colspan="5">&nbsp;</td></tr>
-        <tr><td colspan="5">&nbsp;</td></tr>
+        
       </tbody>
     </table>
 
