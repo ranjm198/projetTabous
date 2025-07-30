@@ -1,8 +1,8 @@
 <?php
-$host = 'dpg-d24lngali9vc73ee97ug-a';      // ex: dpg-xxxxxxx.render.com
-$db   = 'tabousdb';           // ex: facturedb
-$user = 'tabousdb_user';             // ex: admin
-$pass = 'PMEm3uCJrpnOBpHsoou1mN6F7kX4k3Hf';     // 🔒
+$host = 'dpg-d24lngali9vc73ee97ug-a';
+$db   = 'tabousdb';
+$user = 'tabousdb_user';
+$pass = 'PMEm3uCJrpnOBpHsoou1mN6F7kX4k3Hf';
 $port = '5432';
 $charset = 'utf8mb4';
 
@@ -44,8 +44,10 @@ try {
     ";
 
     $pdo->exec($sql);
-    echo "✅ Tables créées avec succès !";
+    // 🔴 Supprimé : echo "✅ Tables créées avec succès !";
 } catch (PDOException $e) {
-    echo "❌ Erreur : " . $e->getMessage();
+    // 🔴 Supprimé : echo "❌ Erreur : " . $e->getMessage();
+    // Optionnel : logue l'erreur ou gère-la autrement
+    die("Erreur de connexion à la base de données.");
 }
 ?>
