@@ -38,7 +38,7 @@ $lignes = $stmt->fetchAll();
   <div class="facture">
     <header class="en-tete">
       <div class="logo">
-        <img src="tabou.png" alt="Logo" id="logo" height="80">
+        <img src="assets/img/tabou.png" alt="Logo" id="logo" height="80">
       </div>
       <div class="infos-contact">
         <p><strong>Tél :</strong> +216 24 225 338</p>
