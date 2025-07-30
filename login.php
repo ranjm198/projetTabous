@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
     // Vérification simple
     if ($email === $superadmin_email && $password === $superadmin_password) {
         $_SESSION['superadmin'] = $email;
-        header("Location: liste_factures.php"); // Redirection après connexion
+        header("Location: index.php"); // Redirection après connexion
         exit;
     } else {
         $error_message = "Identifiants incorrects";
