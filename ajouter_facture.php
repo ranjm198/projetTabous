@@ -1,9 +1,13 @@
-<?php include 'config.php';
-session_start();
+<?php
+session_start(); // ✅ Toujours en tout premier
+include 'config.php';
+
 if (!isset($_SESSION['superadmin'])) {
     header("Location: login.php");
     exit;
-} ?>
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
