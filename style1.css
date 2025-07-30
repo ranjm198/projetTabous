@@ -1,0 +1,85 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.facture {
+  min-height: 100vh;          /* Prend toute la hauteur de la page */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Écarte les éléments pour mettre footer en bas */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.pied {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.en-tete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid black;
+}
+#logo {
+  width: 150px; /* ou la taille que tu souhaites */
+  height: auto; /* pour garder les proportions */
+}
+
+.infos-contact {
+  text-align: right;
+  font-size: 14px;
+}
+
+.date-client {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.client h3 {
+  margin-bottom: 5px;
+}
+
+.box {
+  border: 1px solid black;
+  width: 300px;
+  height: 60px;
+}
+
+.date {
+  font-size: 14px;
+}
+
+.articles {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.articles th, .articles td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+.totaux {
+  width: 300px;
+  margin-top: 30px;
+  margin-left: auto; /* déplace le tableau à droite */
+}
+
+.totaux table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.totaux td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: right;
+}
+
