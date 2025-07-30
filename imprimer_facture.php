@@ -27,7 +27,7 @@ $lignes = $stmt->fetchAll();
 <head>
   <meta charset="UTF-8">
   <title>Facture <?= htmlspecialchars($facture['numero']) ?></title>
-  <link rel="stylesheet" href="style1.css"> <!-- Ton CSS personnalisé -->
+  <link rel="stylesheet" href="style1.css">
   <style>
     @media print {
       .no-print { display: none; }
@@ -68,9 +68,7 @@ $lignes = $stmt->fetchAll();
         </tr>
       </thead>
       <tbody>
-        <?php
-        $i = 1;
-        foreach ($lignes as $ligne): ?>
+        <?php $i = 1; foreach ($lignes as $ligne): ?>
         <tr>
           <td><?= $i++ ?></td>
           <td><?= htmlspecialchars($ligne['designation']) ?></td>
@@ -79,42 +77,39 @@ $lignes = $stmt->fetchAll();
           <td><?= number_format($ligne['montant'], 2) ?> DT</td>
         </tr>
         <?php endforeach; ?>
-        <!-- Lignes vides pour format -->
-        
       </tbody>
     </table>
 
-  <section class="totaux">
-  <table>
-    <tr>
-      <td>Total HT</td>
-      <td><?= number_format($facture['total'], 2) ?> DT</td>
-    </tr>
-    <tr>
-      <td>TVA</td>
-      <td><?= number_format($facture['tva'], 2) ?> DT</td>
-    </tr>
-    <tr>
-      <td>FODEC</td>
-      <td><?= number_format($facture['fodec'], 2) ?> DT</td>
-    </tr>
-    <tr>
-      <td>Timbre</td>
-      <td><?= number_format($facture['timbre'], 2) ?> DT</td>
-    </tr>
-    <tr>
-      <td><strong>Total TTC</strong></td>
-      <td><strong><?= number_format($facture['total_ttc'], 2) ?> DT</strong></td>
-    </tr>
-  </table>
-</section>
-
+    <section class="totaux">
+      <table>
+        <tr>
+          <td>Total HT</td>
+          <td><?= number_format($facture['total'], 2) ?> DT</td>
+        </tr>
+        <tr>
+          <td>TVA</td>
+          <td><?= number_format($facture['tva'], 2) ?> DT</td>
+        </tr>
+        <tr>
+          <td>FODEC</td>
+          <td><?= number_format($facture['fodec'], 2) ?> DT</td>
+        </tr>
+        <tr>
+          <td>Timbre</td>
+          <td><?= number_format($facture['timbre'], 2) ?> DT</td>
+        </tr>
+        <tr>
+          <td><strong>Total TTC</strong></td>
+          <td><strong><?= number_format($facture['total_ttc'], 2) ?> DT</strong></td>
+        </tr>
+      </table>
+    </section>
 
     <footer class="pied">
       <p>Signature : ...........................................</p>
     </footer>
 
-    <div class="text-center no-print" style="margin-top: 20px;">
+    <div class="text-center no-print" style="margin-top: 10px; text-align:center;">
       <button onclick="window.print()">Imprimer</button>
       <a href="liste_factures.php">Retour</a>
     </div>
