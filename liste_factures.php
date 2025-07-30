@@ -1,28 +1,43 @@
 <?php
 include 'config.php';
 session_start();
+
 if (!isset($_SESSION['superadmin'])) {
     header("Location: login.php");
     exit;
 }
+
 $search = $_GET['search'] ?? '';
-$perPage = 10; // Number of records per page
-$page = $_GET['page'] ?? 1;
+$perPage = 10;
+$page = max(1, (int)($_GET['page'] ?? 1));
 $offset = ($page - 1) * $perPage;
 
-// Query with pagination
-$query = "SELECT f.id, f.numero, f.date_facture, f.total, c.nom FROM factures f JOIN clients c ON f.client_id = c.id WHERE f.numero LIKE ? OR f.date_facture LIKE ? ORDER BY f.date_facture DESC LIMIT $perPage OFFSET $offset";
+// Requête avec pagination et conversion de date en texte pour LIKE
+$query = "
+    SELECT f.id, f.numero, f.date_facture, f.total, c.nom 
+    FROM factures f 
+    JOIN clients c ON f.client_id = c.id 
+    WHERE f.numero LIKE ? OR f.date_facture::text LIKE ? 
+    ORDER BY f.date_facture DESC 
+    LIMIT $perPage OFFSET $offset
+";
 $stmt = $pdo->prepare($query);
 $stmt->execute(["%$search%", "%$search%"]);
 $factures = $stmt->fetchAll();
 
-// Get total number of records for pagination
-$totalQuery = "SELECT COUNT(*) FROM factures f JOIN clients c ON f.client_id = c.id WHERE f.numero LIKE ? OR f.date_facture LIKE ?";
+// Total des enregistrements pour la pagination
+$totalQuery = "
+    SELECT COUNT(*) 
+    FROM factures f 
+    JOIN clients c ON f.client_id = c.id 
+    WHERE f.numero LIKE ? OR f.date_facture::text LIKE ?
+";
 $stmtTotal = $pdo->prepare($totalQuery);
 $stmtTotal->execute(["%$search%", "%$search%"]);
 $totalRecords = $stmtTotal->fetchColumn();
 $totalPages = ceil($totalRecords / $perPage);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
