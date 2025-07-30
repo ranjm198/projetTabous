@@ -41,12 +41,17 @@ try {
             prix_unitaire NUMERIC,
             montant NUMERIC
         );
+
+        CREATE TABLE IF NOT EXISTS events (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            start TIMESTAMP NOT NULL
+        );
     ";
 
     $pdo->exec($sql);
-    // 🔴 Supprimé : echo "✅ Tables créées avec succès !";
+    // Optionnel : echo "✅ Tables créées avec succès !";
 } catch (PDOException $e) {
-    // 🔴 Supprimé : echo "❌ Erreur : " . $e->getMessage();
     // Optionnel : logue l'erreur ou gère-la autrement
     die("Erreur de connexion à la base de données.");
 }
