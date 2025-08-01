@@ -32,23 +32,27 @@ $lignes = $stmt->fetchAll();
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
-      padding: 40px;
+      padding: 0;
       font-family: Arial, sans-serif;
       background: #fff;
+      width: 100vw;
+      height: 100vh;
     }
 
     .facture {
-      max-width: 1000px;
-      margin: auto;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
       position: relative;
-      padding: 30px 40px;
+      padding: 0;
     }
 
     .top-section {
       display: flex;
       justify-content: space-between;
+      padding: 20px 40px 0;
     }
 
     .logo img {
@@ -105,6 +109,7 @@ $lignes = $stmt->fetchAll();
     .words {
       margin-top: 25px;
       font-weight: bold;
+      padding-left: 40px;
     }
 
     .observation {
@@ -123,7 +128,16 @@ $lignes = $stmt->fetchAll();
       z-index: -1;
     }
 
+    .no-print {
+      text-align: center;
+      margin-top: 15px;
+    }
+
     @media print {
+      @page {
+        margin: 0;
+      }
+
       .no-print {
         display: none;
       }
@@ -137,7 +151,7 @@ $lignes = $stmt->fetchAll();
     <div class="top-section">
       <div class="societe-info">
         <div class="logo">
-          <img src="https://i.imgur.com/UZ9P3TY.png" alt="Logo">
+          <img src="assets/img/tabou.png" alt="Logo">
         </div>
         <strong>TABOUS CONFECTION</strong><br>
         TEL : +21690347147<br>
@@ -148,9 +162,8 @@ $lignes = $stmt->fetchAll();
 
       <div class="client-box">
         <strong>CLIENT :</strong> <?= htmlspecialchars($facture['nom']) ?><br>
-        <!-- Si tu veux afficher le téléphone et adresse du client, ajoute les colonnes en BDD -->
-        TEL : ...............<br>
-        ADRESSE : ...........<br><br>
+        TEL : ...................<br>
+        ADRESSE : ...............<br><br>
         <strong>Le :</strong> <?= date('d/m/Y', strtotime($facture['date_facture'])) ?>
       </div>
     </div>
@@ -160,7 +173,6 @@ $lignes = $stmt->fetchAll();
     <table>
       <thead>
         <tr>
-          <th>Référence</th>
           <th>DESIGNATION</th>
           <th>TVA</th>
           <th>Qté</th>
@@ -171,9 +183,8 @@ $lignes = $stmt->fetchAll();
       <tbody>
         <?php foreach ($lignes as $ligne): ?>
         <tr>
-          <td><?= htmlspecialchars($ligne['reference'] ?? '-') ?></td>
           <td><?= htmlspecialchars($ligne['designation']) ?></td>
-          <td><?= htmlspecialchars($ligne['tva'] ?? '-') ?></td>
+          <td><?= htmlspecialchars($ligne['tva'] ?? '19') ?></td>
           <td><?= $ligne['quantite'] ?></td>
           <td><?= number_format($ligne['prix_unitaire'], 3, ',', ' ') ?></td>
           <td><?= number_format($ligne['montant'], 3, ',', ' ') ?></td>
@@ -206,15 +217,11 @@ $lignes = $stmt->fetchAll();
     </table>
 
     <div class="words">
-      LA PRÉSENTE FACTURE EST ARRÊTÉE À LA SOMME DE :<br>
-      ....................................................
+      SIGNATURE :<br>
+      ............................
     </div>
 
-    <div class="observation">
-      <strong>OBSERVATION :</strong> Paramétrage et formation 1/2 journée OFFERT
-    </div>
-
-    <div class="text-center no-print" style="margin-top: 15px; text-align:center;">
+    <div class="no-print">
       <button onclick="window.print()">Imprimer</button>
       <a href="liste_factures.php">Retour</a>
     </div>
