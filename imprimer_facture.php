@@ -8,7 +8,9 @@ if (!$id) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT f.*, c.nom FROM factures f JOIN clients c ON f.client_id = c.id WHERE f.id = ?");
+$stmt = $pdo->prepare("SELECT f.*, c.nom, c.telephone, c.adresse FROM factures f 
+                       JOIN clients c ON f.client_id = c.id 
+                       WHERE f.id = ?");
 $stmt->execute([$id]);
 $facture = $stmt->fetch();
 
@@ -21,14 +23,90 @@ $stmt = $pdo->prepare("SELECT * FROM lignes_facture WHERE facture_id = ?");
 $stmt->execute([$id]);
 $lignes = $stmt->fetchAll();
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Facture <?= htmlspecialchars($facture['numero']) ?></title>
-  <link rel="stylesheet" href="style1.css">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: Arial, sans-serif;
+      background: #fff;
+    }
+    .facture {
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+      padding: 30px 40px;
+    }
+    .top-section {
+      display: flex;
+      justify-content: space-between;
+    }
+    .logo img {
+      width: 120px;
+    }
+    .societe-info {
+      font-size: 14px;
+    }
+    .client-box {
+      border: 1px solid #000;
+      border-radius: 15px;
+      padding: 10px;
+      width: 300px;
+      font-size: 14px;
+    }
+    h2 {
+      text-align: center;
+      text-decoration: underline;
+      margin: 20px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #0597b6;
+      color: white;
+    }
+    .totals {
+      margin-top: 20px;
+    }
+    .totals td {
+      padding: 6px;
+    }
+    .right {
+      text-align: right;
+    }
+    .words {
+      margin-top: 25px;
+      font-weight: bold;
+    }
+    .observation {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .bg-shape {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 160px;
+      background: linear-gradient(to bottom right, #a6d7cc, #7ac4c9);
+      clip-path: polygon(50% 0, 100% 0, 100% 100%, 0 100%);
+      z-index: -1;
+    }
     @media print {
       .no-print { display: none; }
     }
@@ -36,80 +114,92 @@ $lignes = $stmt->fetchAll();
 </head>
 <body>
   <div class="facture">
-    <header class="en-tete">
-      <div class="logo">
-        <img src="assets/img/tabou.png" alt="Logo" id="logo" height="80">
-      </div>
-      <div class="infos-contact">
-        <p><strong>Tél :</strong> +216 24 225 338</p>
-        <p><strong>Email :</strong> exemple@email.com</p>
-        <p><strong>Adresse :</strong> Doukhana Bouargoub 8040</p>
-      </div>
-    </header>
+    <div class="bg-shape"></div>
 
-    <div class="date-client">
-      <div class="client">
-        <p><strong>Facture n° :</strong> <?= htmlspecialchars($facture['numero']) ?></p>
-        <p><strong>Client :</strong> M. <?= htmlspecialchars($facture['nom']) ?></p>
+    <div class="top-section">
+      <div class="societe-info">
+        <div class="logo">
+          <img src="assets/img/tabou.png" alt="Logo">
+        </div>
+        <strong>TABOUS CONFECTION</strong><br>
+        TEL : +21690347147<br>
+        EMAIL : Tabous@gmail.com<br>
+        ADRESSE : TUNISIA, Cité beb el khadhra ;<br>
+        Av. Ibn Becha, 1073
       </div>
-      <div class="date">
-        <p><strong>Date :</strong> <?= htmlspecialchars($facture['date_facture']) ?></p>
+
+      <div class="client-box">
+        <strong>CLIENT :</strong> <?= htmlspecialchars($facture['nom']) ?><br>
+        TEL : <?= htmlspecialchars($facture['telephone'] ?? '') ?><br>
+        ADRESSE : <?= htmlspecialchars($facture['adresse'] ?? '') ?><br><br>
+        <strong>Le :</strong> <?= date('d/m/Y', strtotime($facture['date_facture'])) ?>
       </div>
     </div>
 
-    <table class="articles">
+    <h2>Facture N° : <?= htmlspecialchars($facture['numero']) ?></h2>
+
+    <table>
       <thead>
         <tr>
-          <th>N°</th>
-          <th>Désignation</th>
-          <th>Quantité</th>
-          <th>Prix Unitaire</th>
-          <th>Total</th>
+          <th>Référence</th>
+          <th>DESIGNATION</th>
+          <th>TVA</th>
+          <th>Qté</th>
+          <th>PU HT</th>
+          <th>MONTANT HT</th>
         </tr>
       </thead>
       <tbody>
-        <?php $i = 1; foreach ($lignes as $ligne): ?>
+        <?php foreach ($lignes as $ligne): ?>
         <tr>
-          <td><?= $i++ ?></td>
+          <td><?= htmlspecialchars($ligne['reference'] ?? '') ?></td>
           <td><?= htmlspecialchars($ligne['designation']) ?></td>
-          <td><?= $ligne['quantite'] ?></td>
-          <td><?= number_format($ligne['prix_unitaire'], 2) ?> DT</td>
-          <td><?= number_format($ligne['montant'], 2) ?> DT</td>
+          <td><?= htmlspecialchars($ligne['tva'] ?? '') ?></td>
+          <td><?= htmlspecialchars($ligne['quantite']) ?></td>
+          <td><?= number_format($ligne['prix_unitaire'], 3, ',', ' ') ?></td>
+          <td><?= number_format($ligne['montant'], 3, ',', ' ') ?></td>
         </tr>
         <?php endforeach; ?>
       </tbody>
     </table>
 
-    <section class="totaux">
-      <table>
-        <tr>
-          <td>Total HT</td>
-          <td><?= number_format($facture['total'], 2) ?> DT</td>
-        </tr>
-        <tr>
-          <td>TVA</td>
-          <td><?= number_format($facture['tva'], 2) ?> DT</td>
-        </tr>
-        <tr>
-          <td>FODEC</td>
-          <td><?= number_format($facture['fodec'], 2) ?> DT</td>
-        </tr>
-        <tr>
-          <td>Timbre</td>
-          <td><?= number_format($facture['timbre'], 2) ?> DT</td>
-        </tr>
-        <tr>
-          <td><strong>Total TTC</strong></td>
-          <td><strong><?= number_format($facture['total_ttc'], 2) ?> DT</strong></td>
-        </tr>
-      </table>
-    </section>
+    <table class="totals">
+      <tr>
+        <td class="right" colspan="5"><strong>Total HT</strong></td>
+        <td><?= number_format($facture['total'], 3, ',', ' ') ?></td>
+      </tr>
+      <tr>
+        <td class="right" colspan="5"><strong>Remise Globale</strong></td>
+        <td><?= number_format($facture['remise'] ?? 0, 3, ',', ' ') ?></td>
+      </tr>
+      <tr>
+        <td class="right" colspan="5"><strong>Total TVA</strong></td>
+        <td><?= number_format($facture['tva'], 3, ',', ' ') ?></td>
+      </tr>
+      <tr>
+        <td class="right" colspan="5"><strong>Total TTC</strong></td>
+        <td><?= number_format($facture['total_ttc'], 3, ',', ' ') ?></td>
+      </tr>
+      <tr>
+        <td class="right" colspan="5"><strong>Timbre</strong></td>
+        <td><?= number_format($facture['timbre'], 3, ',', ' ') ?></td>
+      </tr>
+      <tr>
+        <td class="right" colspan="5"><strong>Net à Payer</strong></td>
+        <td><strong><?= number_format($facture['total_ttc'] + $facture['timbre'], 3, ',', ' ') ?></strong></td>
+      </tr>
+    </table>
 
-    <footer class="pied">
-      <p>Signature : ...........................................</p>
-    </footer>
+    <div class="words">
+      LA PRÉSENTE FACTURE EST ARRÊTÉE À LA SOMME DE :<br>
+      <?= htmlspecialchars($facture['montant_en_lettres'] ?? '') ?>
+    </div>
 
-    <div class="text-center no-print" style="margin-top: 10px; text-align:center;">
+    <div class="observation">
+      <strong>OBSERVATION :</strong> <?= htmlspecialchars($facture['observation'] ?? '') ?>
+    </div>
+
+    <div class="no-print" style="margin-top: 15px; text-align:center;">
       <button onclick="window.print()">Imprimer</button>
       <a href="liste_factures.php">Retour</a>
     </div>
