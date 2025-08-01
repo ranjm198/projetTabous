@@ -211,75 +211,82 @@ Espace Administrateur            </a>
                 </li>
               </ul>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title">Ajouter facture</h4>
-                  </div>
-                  <div class="card-body">
-            <form action="enregistrer_facture.php" method="post">
-              <div class="mb-3">
-                <label for="client" class="form-label">Nom du client</label>
-                <input type="text" class="form-control" name="client" required />
-              </div>
-              <div class="mb-3">
-                <label for="date_facture" class="form-label">Date de la facture</label>
-                <input type="date" class="form-control" name="date_facture" required />
-              </div>
+           <div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Ajouter facture</h4>
+      </div>
+      <div class="card-body">
+        <form action="enregistrer_facture.php" method="post">
+          <div class="row">
+            <div class="mb-3 col-md-6 col-12">
+              <label for="client" class="form-label">Nom du client</label>
+              <input type="text" class="form-control" name="client" required />
+            </div>
+            <div class="mb-3 col-md-6 col-12">
+              <label for="date_facture" class="form-label">Date de la facture</label>
+              <input type="date" class="form-control" name="date_facture" required />
+            </div>
+          </div>
 
-              <table class="table table-bordered" id="lignes">
-                <thead>
-                  <tr>
-                    <th>Désignation</th>
-                    <th>Quantité</th>
-                    <th>Prix unitaire</th>
-                    <th>Montant</th>
-                    <th>
-                      <button type="button" class="btn btn-primary" onclick="ajouterLigne()">+</button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="text" name="designation[]" class="form-control" required /></td>
-                    <td><input type="number" name="quantite[]" class="form-control" required /></td>
-                    <td><input type="number" step="0.01" name="prix_unitaire[]" class="form-control" required /></td>
-                    <td><input type="number" step="0.01" name="montant[]" class="form-control" readonly /></td>
-                    <td><button type="button" class="btn btn-danger" onclick="supprimerLigne(this)">-</button></td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle" id="lignes">
+              <thead class="table-primary">
+                <tr>
+                  <th>Désignation</th>
+                  <th>Quantité</th>
+                  <th>Prix unitaire</th>
+                  <th>Montant</th>
+                  <th style="width: 50px;">
+                    <button type="button" class="btn btn-sm btn-success" onclick="ajouterLigne()">+</button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="text" name="designation[]" class="form-control" required /></td>
+                  <td><input type="number" name="quantite[]" class="form-control" required /></td>
+                  <td><input type="number" step="0.01" name="prix_unitaire[]" class="form-control" required /></td>
+                  <td><input type="number" step="0.01" name="montant[]" class="form-control" readonly /></td>
+                  <td><button type="button" class="btn btn-sm btn-danger" onclick="supprimerLigne(this)">-</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-              
-    <div class="mb-3">
-      <label class="form-label">Montant HT</label>
-      <input type="number" step="0.01" class="form-control" name="total" id="total" readonly />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">FODeC (1%)</label>
-      <input type="number" step="0.01" class="form-control" id="fodec" name="fodec" readonly />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">TVA (19%)</label>
-      <input type="number" step="0.01" class="form-control" id="tva" name="tva" readonly />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Timbre</label>
-      <input type="number" step="0.01" class="form-control" id="timbre" name="timbre" value="1.000" readonly />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Total TTC</label>
-      <input type="number" step="0.01" class="form-control" id="total_ttc" name="total_ttc" readonly />
-    </div>
+          <div class="row mt-4">
+            <div class="col-md-6 col-12 mb-3">
+              <label class="form-label">Montant HT</label>
+              <input type="number" step="0.01" class="form-control" name="total" id="total" readonly />
+            </div>
+            <div class="col-md-6 col-12 mb-3">
+              <label class="form-label">FODeC (1%)</label>
+              <input type="number" step="0.01" class="form-control" id="fodec" name="fodec" readonly />
+            </div>
+            <div class="col-md-6 col-12 mb-3">
+              <label class="form-label">TVA (19%)</label>
+              <input type="number" step="0.01" class="form-control" id="tva" name="tva" readonly />
+            </div>
+            <div class="col-md-6 col-12 mb-3">
+              <label class="form-label">Timbre</label>
+              <input type="number" step="0.01" class="form-control" id="timbre" name="timbre" value="1.000" readonly />
+            </div>
+            <div class="col-md-6 col-12 mb-3">
+              <label class="form-label">Total TTC</label>
+              <input type="number" step="0.01" class="form-control" id="total_ttc" name="total_ttc" readonly />
+            </div>
+          </div>
 
-              <button type="submit" class="btn btn-primary"
-              >Enregistrer</button>
-            </form>
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
     </div>
-    </div>
-    </div>
-    </div>
+  </div>
+</div>
+
 
           </div>
         </div>
