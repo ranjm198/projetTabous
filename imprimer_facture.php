@@ -8,9 +8,7 @@ if (!$id) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT f.*, c.nom, c.telephone, c.adresse FROM factures f 
-                       JOIN clients c ON f.client_id = c.id 
-                       WHERE f.id = ?");
+$stmt = $pdo->prepare("SELECT f.*, c.nom FROM factures f JOIN clients c ON f.client_id = c.id WHERE f.id = ?");
 $stmt->execute([$id]);
 $facture = $stmt->fetch();
 
@@ -23,6 +21,7 @@ $stmt = $pdo->prepare("SELECT * FROM lignes_facture WHERE facture_id = ?");
 $stmt->execute([$id]);
 $lignes = $stmt->fetchAll();
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,28 +31,34 @@ $lignes = $stmt->fetchAll();
     * {
       box-sizing: border-box;
     }
+
     body {
       margin: 0;
       padding: 40px;
       font-family: Arial, sans-serif;
       background: #fff;
     }
+
     .facture {
       max-width: 1000px;
       margin: auto;
       position: relative;
       padding: 30px 40px;
     }
+
     .top-section {
       display: flex;
       justify-content: space-between;
     }
+
     .logo img {
       width: 120px;
     }
+
     .societe-info {
       font-size: 14px;
     }
+
     .client-box {
       border: 1px solid #000;
       border-radius: 15px;
@@ -61,42 +66,52 @@ $lignes = $stmt->fetchAll();
       width: 300px;
       font-size: 14px;
     }
+
     h2 {
       text-align: center;
       text-decoration: underline;
       margin: 20px 0;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
     }
+
     th, td {
       border: 1px solid #000;
       padding: 8px;
       text-align: center;
     }
+
     th {
       background-color: #0597b6;
       color: white;
     }
+
     .totals {
       margin-top: 20px;
     }
+
     .totals td {
       padding: 6px;
     }
+
     .right {
       text-align: right;
     }
+
     .words {
       margin-top: 25px;
       font-weight: bold;
     }
+
     .observation {
       margin-top: 10px;
       font-size: 13px;
     }
+
     .bg-shape {
       position: absolute;
       top: 0;
@@ -107,8 +122,11 @@ $lignes = $stmt->fetchAll();
       clip-path: polygon(50% 0, 100% 0, 100% 100%, 0 100%);
       z-index: -1;
     }
+
     @media print {
-      .no-print { display: none; }
+      .no-print {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -119,7 +137,7 @@ $lignes = $stmt->fetchAll();
     <div class="top-section">
       <div class="societe-info">
         <div class="logo">
-          <img src="assets/img/tabou.png" alt="Logo">
+          <img src="https://i.imgur.com/UZ9P3TY.png" alt="Logo">
         </div>
         <strong>TABOUS CONFECTION</strong><br>
         TEL : +21690347147<br>
@@ -130,8 +148,9 @@ $lignes = $stmt->fetchAll();
 
       <div class="client-box">
         <strong>CLIENT :</strong> <?= htmlspecialchars($facture['nom']) ?><br>
-        TEL : <?= htmlspecialchars($facture['telephone'] ?? '') ?><br>
-        ADRESSE : <?= htmlspecialchars($facture['adresse'] ?? '') ?><br><br>
+        <!-- Si tu veux afficher le téléphone et adresse du client, ajoute les colonnes en BDD -->
+        TEL : ...............<br>
+        ADRESSE : ...........<br><br>
         <strong>Le :</strong> <?= date('d/m/Y', strtotime($facture['date_facture'])) ?>
       </div>
     </div>
@@ -152,10 +171,10 @@ $lignes = $stmt->fetchAll();
       <tbody>
         <?php foreach ($lignes as $ligne): ?>
         <tr>
-          <td><?= htmlspecialchars($ligne['reference'] ?? '') ?></td>
+          <td><?= htmlspecialchars($ligne['reference'] ?? '-') ?></td>
           <td><?= htmlspecialchars($ligne['designation']) ?></td>
-          <td><?= htmlspecialchars($ligne['tva'] ?? '') ?></td>
-          <td><?= htmlspecialchars($ligne['quantite']) ?></td>
+          <td><?= htmlspecialchars($ligne['tva'] ?? '-') ?></td>
+          <td><?= $ligne['quantite'] ?></td>
           <td><?= number_format($ligne['prix_unitaire'], 3, ',', ' ') ?></td>
           <td><?= number_format($ligne['montant'], 3, ',', ' ') ?></td>
         </tr>
@@ -169,37 +188,33 @@ $lignes = $stmt->fetchAll();
         <td><?= number_format($facture['total'], 3, ',', ' ') ?></td>
       </tr>
       <tr>
-        <td class="right" colspan="5"><strong>Remise Globale</strong></td>
-        <td><?= number_format($facture['remise'] ?? 0, 3, ',', ' ') ?></td>
-      </tr>
-      <tr>
-        <td class="right" colspan="5"><strong>Total TVA</strong></td>
+        <td class="right" colspan="5"><strong>TVA</strong></td>
         <td><?= number_format($facture['tva'], 3, ',', ' ') ?></td>
       </tr>
       <tr>
-        <td class="right" colspan="5"><strong>Total TTC</strong></td>
-        <td><?= number_format($facture['total_ttc'], 3, ',', ' ') ?></td>
+        <td class="right" colspan="5"><strong>FODEC</strong></td>
+        <td><?= number_format($facture['fodec'], 3, ',', ' ') ?></td>
       </tr>
       <tr>
         <td class="right" colspan="5"><strong>Timbre</strong></td>
         <td><?= number_format($facture['timbre'], 3, ',', ' ') ?></td>
       </tr>
       <tr>
-        <td class="right" colspan="5"><strong>Net à Payer</strong></td>
-        <td><strong><?= number_format($facture['total_ttc'] + $facture['timbre'], 3, ',', ' ') ?></strong></td>
+        <td class="right" colspan="5"><strong>Total TTC</strong></td>
+        <td><strong><?= number_format($facture['total_ttc'], 3, ',', ' ') ?></strong></td>
       </tr>
     </table>
 
     <div class="words">
       LA PRÉSENTE FACTURE EST ARRÊTÉE À LA SOMME DE :<br>
-      <?= htmlspecialchars($facture['montant_en_lettres'] ?? '') ?>
+      ....................................................
     </div>
 
     <div class="observation">
-      <strong>OBSERVATION :</strong> <?= htmlspecialchars($facture['observation'] ?? '') ?>
+      <strong>OBSERVATION :</strong> Paramétrage et formation 1/2 journée OFFERT
     </div>
 
-    <div class="no-print" style="margin-top: 15px; text-align:center;">
+    <div class="text-center no-print" style="margin-top: 15px; text-align:center;">
       <button onclick="window.print()">Imprimer</button>
       <a href="liste_factures.php">Retour</a>
     </div>
