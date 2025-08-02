@@ -67,10 +67,11 @@ $lignes = $stmt->fetchAll();
     .client-box {
       border: 1px solid #000;
       border-radius: 10px;
-      padding: 8px 12px;
-      width: 260px;
-      font-size: 13px;
-      background-color: #f9f9f9;
+      padding: 12px 15px;
+      width: 280px;
+      font-size: 14px;
+      line-height: 1.8;
+      background-color: #fff; /* ✅ plus de fond gris */
     }
 
     h2 {
@@ -123,10 +124,15 @@ $lignes = $stmt->fetchAll();
       top: 0;
       right: 0;
       height: 100%;
-      width: 180px;
+      width: 200px;
       background: linear-gradient(to bottom right, #a6d7cc, #7ac4c9);
       clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);
-      z-index: -1;
+      z-index: 0;
+    }
+
+    .facture > *:not(.bg-shape) {
+      position: relative;
+      z-index: 1;
     }
 
     .no-print {
@@ -162,10 +168,10 @@ $lignes = $stmt->fetchAll();
       </div>
 
       <div class="client-box">
-        <strong>CLIENT :</strong> <?= htmlspecialchars($facture['nom']) ?><br>
-        TEL : ...................<br>
-        ADRESSE : ...............<br>
-        <strong>Le :</strong> <?= date('d/m/Y', strtotime($facture['date_facture'])) ?>
+        <p><strong>CLIENT :</strong> <?= htmlspecialchars($facture['nom']) ?></p>
+        <p><strong>TEL :</strong> ...................</p>
+        <p><strong>ADRESSE :</strong> ...............</p>
+        <p><strong>Le :</strong> <?= date('d/m/Y', strtotime($facture['date_facture'])) ?></p>
       </div>
     </div>
 
