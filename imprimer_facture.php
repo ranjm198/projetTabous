@@ -37,37 +37,40 @@ $lignes = $stmt->fetchAll();
       padding: 0;
       font-family: Arial, sans-serif;
       background: #fff;
-      width: 100vw;
-      height: 100vh;
     }
 
     .facture {
-      width: calc(100vw - 40px);
+      width: 95%;
       margin: 0 auto;
-      padding: 40px;
+      padding: 40px 20px;
       position: relative;
+      overflow: hidden;
     }
 
     .top-section {
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
+      align-items: flex-start;
     }
 
     .logo img {
       width: 120px;
     }
 
-   .societe-info {
-  font-size: 14px;
-  line-height: 1.4; /* ✅ plus d’espace entre les lignes TEL, EMAIL, etc. */
-}
+    .societe-info {
+      font-size: 14px;
+      line-height: 1.6;
+      padding-right: 20px;
+    }
+
     .client-box {
       border: 1px solid #000;
-      border-radius: 15px;
-      padding: 10px;
-      width: 300px;
-      font-size: 14px;
+      border-radius: 10px;
+      padding: 8px 12px;
+      width: 260px;
+      font-size: 13px;
+      background-color: #f9f9f9;
     }
 
     h2 {
@@ -120,9 +123,9 @@ $lignes = $stmt->fetchAll();
       top: 0;
       right: 0;
       height: 100%;
-      width: 160px;
+      width: 180px;
       background: linear-gradient(to bottom right, #a6d7cc, #7ac4c9);
-      clip-path: polygon(50% 0, 100% 0, 100% 100%, 0 100%);
+      clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);
       z-index: -1;
     }
 
@@ -161,7 +164,7 @@ $lignes = $stmt->fetchAll();
       <div class="client-box">
         <strong>CLIENT :</strong> <?= htmlspecialchars($facture['nom']) ?><br>
         TEL : ...................<br>
-        ADRESSE : ...............<br><br>
+        ADRESSE : ...............<br>
         <strong>Le :</strong> <?= date('d/m/Y', strtotime($facture['date_facture'])) ?>
       </div>
     </div>
