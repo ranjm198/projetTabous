@@ -42,17 +42,16 @@ $lignes = $stmt->fetchAll();
     }
 
     .facture {
-      width: 100vw;
-      height: 100vh;
-      margin: 0;
+      width: calc(100vw - 40px);
+      margin: 0 auto;
+      padding: 40px;
       position: relative;
-      padding: 0;
     }
 
     .top-section {
       display: flex;
       justify-content: space-between;
-      padding: 20px 40px 0;
+      margin-bottom: 20px;
     }
 
     .logo img {
@@ -109,7 +108,6 @@ $lignes = $stmt->fetchAll();
     .words {
       margin-top: 25px;
       font-weight: bold;
-      padding-left: 40px;
     }
 
     .observation {
@@ -135,7 +133,7 @@ $lignes = $stmt->fetchAll();
 
     @media print {
       @page {
-        margin: 0;
+        margin: 10mm;
       }
 
       .no-print {
