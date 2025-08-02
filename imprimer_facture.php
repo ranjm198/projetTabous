@@ -68,9 +68,9 @@ $lignes = $stmt->fetchAll();
       border: 1px solid #000;
       border-radius: 10px;
       padding: 12px 15px;
-      width: 320px;
+      width: 350px;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.3;
       background-color: #fff; /* ✅ plus de fond gris */
     }
 
