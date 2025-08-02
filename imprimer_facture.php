@@ -58,18 +58,16 @@ $lignes = $stmt->fetchAll();
       width: 120px;
     }
 
-    .societe-info {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
+   .societe-info {
+  font-size: 14px;
+  line-height: 1.4; /* ✅ plus d’espace entre les lignes TEL, EMAIL, etc. */
+}
     .client-box {
       border: 1px solid #000;
       border-radius: 15px;
-      padding: 8px 10px;
-      width: 220px;
-      font-size: 13px;
-      line-height: 1.4;
+      padding: 10px;
+      width: 300px;
+      font-size: 14px;
     }
 
     h2 {
@@ -153,7 +151,7 @@ $lignes = $stmt->fetchAll();
         <div class="logo">
           <img src="assets/img/tabou.png" alt="Logo">
         </div>
-        <strong>TABOUS CONFECTION</strong><br><br>
+        <strong>TABOUS CONFECTION</strong><br>
         TEL : +21690347147<br>
         EMAIL : Tabous@gmail.com<br>
         ADRESSE : TUNISIA, Cité beb el khadhra ;<br>
