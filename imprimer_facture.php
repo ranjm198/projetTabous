@@ -60,14 +60,16 @@ $lignes = $stmt->fetchAll();
 
     .societe-info {
       font-size: 14px;
+      line-height: 1.6;
     }
 
     .client-box {
       border: 1px solid #000;
       border-radius: 15px;
-      padding: 10px;
-      width: 300px;
-      font-size: 14px;
+      padding: 8px 10px;
+      width: 220px;
+      font-size: 13px;
+      line-height: 1.4;
     }
 
     h2 {
@@ -151,7 +153,7 @@ $lignes = $stmt->fetchAll();
         <div class="logo">
           <img src="assets/img/tabou.png" alt="Logo">
         </div>
-        <strong>TABOUS CONFECTION</strong><br>
+        <strong>TABOUS CONFECTION</strong><br><br>
         TEL : +21690347147<br>
         EMAIL : Tabous@gmail.com<br>
         ADRESSE : TUNISIA, Cité beb el khadhra ;<br>
